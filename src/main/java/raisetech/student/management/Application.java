@@ -14,31 +14,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Application {
 
- @Autowired
- private  StudentRepository repository;
+  @Autowired
+  private StudentRepository repository;
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
 
-	@GetMapping("/student")
-	public String getStudent(@RequestParam("name") String name) {
-		Student student = repository.searchByName(name);
-		return student.getName() + " " + student.getAge() + "歳";
-	}
+  @GetMapping("/student")
+  public String getStudent(@RequestParam("name") String name) {
+    Student student = repository.searchByName(name);
+    return student.getName() + " " + student.getAge() + "歳";
+  }
 
-	@PostMapping("/student")
-	public void registerStudent(String name, int age) {
-		repository.registerStudent(name, age);
-	}
+  @PostMapping("/student")
+  public void registerStudent(String name, int age) {
+    repository.registerStudent(name, age);
+  }
 
-	@PatchMapping("/student")
-	public void updateStudentName(String name, int age) {
-		repository.updateStudent(name, age);
-	}
+  @PatchMapping("/student")
+  public void updateStudentName(String name, int age) {
+    repository.updateStudent(name, age);
+  }
 
-	@DeleteMapping("/student")
-	public void deleteStudent(String name) {
+  @DeleteMapping("/student")
+  public void deleteStudent(String name) {
     repository.deleteStudent(name);
-	}
+  }
 }
