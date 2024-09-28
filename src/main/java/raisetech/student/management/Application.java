@@ -13,14 +13,18 @@ public class Application {
 
   @Autowired
   private StudentRepository repository;
-  private StudentRepository Students_coursesRepository;
 
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
   }
 
   @GetMapping("/studentList")
-  public List<Students_courses> getStudentList() {
+  public List<Student> getStudentList() {
     return repository.search();
+  }
+
+  @GetMapping("/studentCourseList")
+  public List<Students_courses> getStudentCourseList() {
+    return repository.searchStudentsCourses();
   }
 }
