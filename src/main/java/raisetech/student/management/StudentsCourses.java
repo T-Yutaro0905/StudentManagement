@@ -6,11 +6,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Students_courses {
+public class StudentsCourses {
 
   private String id;
-  private String student_id;
+  private String studentId;
   private String course;
-  private LocalDateTime start_time;
-  private LocalDateTime end_time;
+  private LocalDateTime startTime;
+  private LocalDateTime endTime;
 }
