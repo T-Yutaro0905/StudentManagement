@@ -13,23 +13,23 @@ import raisetech.student.management.data.StudentsCourses;
 public interface StudentRepository {
 
   @Select("SELECT * FROM students")
-  List<Student> searchStudentList();
+  List<Student> searchStudents();
 
   @Select("SELECT * FROM students WHERE id = #{id}")
-  Student searchStudent(String id);
+  Student searchStudent(int id);
 
   @Select("SELECT * FROM students_courses")
-  List<StudentsCourses> searchstudentsCourseList();
+  List<StudentsCourses> searchStudentsCoursesList();
 
   @Select("SELECT * FROM students_courses WHERE student_id = #{studentId}")
-  List<StudentsCourses> searchStudentsCourses(String studentId);
+  List<StudentsCourses> searchStudentsCourses(int studentId);
 
   @Insert("INSERT INTO students(name, kanaName, nickname, mail_address, address, age, gender, remark, is_deleted)"
   + "VALUES (#{name}, #{kanaName}, #{nickname}, #{mailAddress}, #{address}, #{age}, #{gender}, #{remark}, false)")
   @Options(useGeneratedKeys = true, keyProperty = "id")
   void registerStudent(Student student);
 
-  @Insert("INSERT INTO students_courses(student_id, courseName, start_date, end_date)"
+  @Insert("INSERT INTO students_courses(student_id, course_name, start_date, end_date)"
   + "VALUES(#{studentId}, #{courseName}, #{startDate}, #{endDate})")
   @Options(useGeneratedKeys = true, keyProperty = "id")
   void registerStudentsCourses(StudentsCourses studentsCourses);
@@ -39,6 +39,9 @@ public interface StudentRepository {
       + " remark = #{remark}, is_deleted = #{isDeleted} WHERE id = #{id}")
   void updateStudent(Student student);
 
-  @Update("UPDATE students_courses SET(course = #{course} WHERE id = #{id}")
+  @Update("UPDATE students_courses SET course_name = #{courseName} WHERE id = #{id}")
   void updateStudentsCourses(StudentsCourses studentsCourses);
+
+
 }
+
