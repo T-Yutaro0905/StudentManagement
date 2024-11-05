@@ -13,16 +13,16 @@ import raisetech.student.management.data.StudentsCourses;
 public interface StudentRepository {
 
   @Select("SELECT * FROM students")
-  List<Student> searchStudents();
+  List<Student> search();
 
   @Select("SELECT * FROM students WHERE id = #{id}")
-  Student searchStudent(int id);
+  Student searchStudent(String id);
 
   @Select("SELECT * FROM students_courses")
   List<StudentsCourses> searchStudentsCoursesList();
 
   @Select("SELECT * FROM students_courses WHERE student_id = #{studentId}")
-  List<StudentsCourses> searchStudentsCourses(int studentId);
+  List<StudentsCourses> searchStudentsCourses(String studentId);
 
   @Insert("INSERT INTO students(name, kanaName, nickname, mail_address, address, age, gender, remark, is_deleted)"
   + "VALUES (#{name}, #{kanaName}, #{nickname}, #{mailAddress}, #{address}, #{age}, #{gender}, #{remark}, false)")
