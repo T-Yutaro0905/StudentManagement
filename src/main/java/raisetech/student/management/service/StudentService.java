@@ -13,7 +13,7 @@ import raisetech.student.management.repository.StudentRepository;
 @Service
 public class StudentService {
 
-  private StudentRepository repository;
+  private final StudentRepository repository;
 
   @Autowired
   public StudentService(StudentRepository repository) {
@@ -21,12 +21,12 @@ public class StudentService {
   }
 
   public List<Student> searchStudentList() {
-    return repository.searchStudents();
+    return repository.search();
   }
 
-  public StudentDetail searchStudent(int id) {
+  public StudentDetail searchStudent(String id) {
     Student student = repository.searchStudent(id);
-    List<StudentsCourses> studentsCourses = repository.searchStudentsCourses(Integer.parseInt(student.getId()));
+    List<StudentsCourses> studentsCourses = repository.searchStudentsCourses(student.getId());
     StudentDetail studentDetail = new StudentDetail();
     studentDetail.setStudent(student);
     studentDetail.setStudentsCourses(studentsCourses);
@@ -52,7 +52,6 @@ public class StudentService {
   public void updateStudent(StudentDetail studentDetail){
     repository.updateStudent(studentDetail.getStudent());
     for (StudentsCourses studentsCourse : studentDetail.getStudentsCourses()) {
-      studentsCourse.setStudentId(studentDetail.getStudent().getId());
       repository.updateStudentsCourses(studentsCourse);
     }
   }
