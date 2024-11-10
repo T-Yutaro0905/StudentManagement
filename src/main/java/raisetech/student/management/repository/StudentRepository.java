@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import raisetech.student.management.data.Student;
-import raisetech.student.management.data.StudentsCourses;
+import raisetech.student.management.data.StudentCourse;
 
 /**
  * 受講生テーブルと受講生コース情報テーブルと紐づくRepositoryです。
@@ -20,7 +20,6 @@ public interface StudentRepository {
    *
    * @return 受講生一覧（全件）
    */
-  @Select("SELECT * FROM students")
   List<Student> search();
 
   /**
@@ -29,7 +28,6 @@ public interface StudentRepository {
    * @param id 受講生ID
    * @return 受講生
    */
-  @Select("SELECT * FROM students WHERE id = #{id}")
   Student searchStudent(String id);
 
   /**
@@ -37,8 +35,7 @@ public interface StudentRepository {
    *
    * @return 受講生のコース情報（全件）
    */
-  @Select("SELECT * FROM students_courses")
-  List<StudentsCourses> searchStudentsCoursesList();
+  List<StudentCourse> searchStudentCourseList();
 
   /**
    * 受講生IDに紐づく受講生コース情報を検索します。
@@ -46,27 +43,34 @@ public interface StudentRepository {
    * @param studentId 受講生ID
    * @return 受講生IDに紐づく受講生コース情報
    */
-  @Select("SELECT * FROM students_courses WHERE student_id = #{studentId}")
-  List<StudentsCourses> searchStudentsCourses(String studentId);
+  List<StudentCourse> searchStudentCourse(String studentId);
 
-  @Insert("INSERT INTO students(name, kanaName, nickname, mail_address, address, age, gender, remark, is_deleted)"
-  + "VALUES (#{name}, #{kanaName}, #{nickname}, #{mailAddress}, #{address}, #{age}, #{gender}, #{remark}, false)")
-  @Options(useGeneratedKeys = true, keyProperty = "id")
+  /**
+   * 受講生を新規登録します。　IDに関しては自動採番を行う。
+   *
+   * @param student　受講生
+   */
   void registerStudent(Student student);
 
-  @Insert("INSERT INTO students_courses(student_id, course_name, start_date, end_date)"
-  + "VALUES(#{studentId}, #{courseName}, #{startDate}, #{endDate})")
-  @Options(useGeneratedKeys = true, keyProperty = "id")
-  void registerStudentsCourses(StudentsCourses studentsCourses);
+  /**
+   * 受講生コース情報を新規登録します。　IDに関しては自動採番を行う。
+   *
+   * @param studentCourse　受講生コース情報
+   */
+  void registerStudentCourse(StudentCourse studentCourse);
 
-  @Update("UPDATE students SET name = #{name}, kanaName = #{kanaName}, nickname = #{nickname},"
-      + " mail_address = #{mailAddress}, address = #{address}, age = #{age}, gender = #{gender},"
-      + " remark = #{remark}, is_deleted = #{isDeleted} WHERE id = #{id}")
+  /**
+   * 受講生を更新します。
+   *
+   * @param student　受講生
+   */
   void updateStudent(Student student);
 
-  @Update("UPDATE students_courses SET course_name = #{courseName} WHERE id = #{id}")
-  void updateStudentsCourses(StudentsCourses studentsCourses);
-
-
+  /**
+   * 受講生コース情報のコース名を更新します。
+   *
+   * @param studentCourse
+   */
+  void updateStudentCourse(StudentCourse studentCourse);
 }
 
