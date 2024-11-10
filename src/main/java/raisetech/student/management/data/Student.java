@@ -9,10 +9,13 @@ import lombok.Setter;
 public class Student {
 
   private String id;
-  @NotBlank private String name;
-  @NotBlank private String kanaName;
+  @NotBlank
+  private String name;
+  @NotBlank
+  private String kanaName;
   private String nickname;
-  @NotBlank private String mailAddress;
+  @NotBlank
+  private String mailAddress;
   private String address;
   private int age;
   private String gender;
