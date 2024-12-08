@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import jakarta.validation.ConstraintViolation;
@@ -38,14 +39,15 @@ class StudentControllerTest {
   @Test
   void 受講生詳細の一覧検索が実行できて空のリストが返ってくること() throws Exception {
     mockMvc.perform(get("/studentList"))
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andExpect(content().json("[]"));
 
     verify(service, times(1)).searchStudentList();
   }
 
   @Test
   void 受講生詳細の単一検索が実行できて対象となる受講英のリストが返ってくること() throws Exception {
-    String id = "123";
+    String id = "999";
     mockMvc.perform(get("/student/{id}", id))
         .andExpect(status().isOk());
 
@@ -53,7 +55,9 @@ class StudentControllerTest {
   }
 
   @Test
-  void 受講生詳細の新規登録が実行できて登録された受講生のリストが返ってくること() throws Exception {
+  void 受講生詳細の登録が実行できて空で返ってくること() throws Exception {
+    // リクエストデータは適切に構築して入力チェックの検証も兼ねている。
+    // 本来であれば帰りは登録されたデータが入るが、モック化すると意味がないため、レスポンスは作らない。
     mockMvc.perform(post("/registerStudent").contentType(MediaType.APPLICATION_JSON).content(
         """
               {
@@ -63,13 +67,13 @@ class StudentControllerTest {
                   "nickname" : "コウジ",
                   "mailAddress" : "test@example.com",
                   "address" : "奈良",
-                  "age" : 37,
+                  "age" : "37",
                   "gender" : "男性",
                   "remark" : ""
                },
                "studentCourseList" : [
                {
-                  "courseName" : "Java"
+                  "courseName" : "JavaCourse"
                }
               ]
              }
@@ -80,23 +84,29 @@ class StudentControllerTest {
   }
 
   @Test
-  void 受講生詳細の更新が実行できて特定のメッセージが表示されること() throws Exception {
+  void 受講生詳細の更新が実行できて空で返ってくること() throws Exception {
+    // リクエストデータは適切に構築して入力チェックの検証も兼ねている。
     mockMvc.perform(put("/updateStudent").contentType(MediaType.APPLICATION_JSON).content(
         """
             {
                "student" : {
+                  "id" : "12",
                   "name" : "江並公史",
                   "kanaName" : "エナミコウジ",
                   "nickname" : "コウジ",
                   "mailAddress" : "test@example.com",
                   "address" : "奈良",
-                  "age" : 37,
+                  "age" : "37",
                   "gender" : "男性",
                   "remark" : ""
                },
                "studentCourseList" : [
                {
-                  "courseName" : ""
+                  "id" : "15",
+                  "studentId" : "12",
+                  "courseName" : "JavaCourse",
+                  "startDate" : "2024-04-27T10:50:39.833614",
+                  "endDate" : "2024-04-27T10:50:39.833614"
                }
               ]
              }
@@ -104,6 +114,13 @@ class StudentControllerTest {
     )).andExpect(status().isOk());
 
     verify(service, times(1)).updateStudent(any());
+  }
+
+  @Test
+  void 受講生詳細の例外APIが実行できてステータスが400で返ってくること() throws Exception {
+    mockMvc.perform(get("/exception"))
+        .andExpect(status().is4xxClientError())
+        .andExpect(content().string("このAPIは現在利用できません。古いURLとなっています。"));
   }
 
   @Test
