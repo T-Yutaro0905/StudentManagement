@@ -46,7 +46,7 @@ class StudentControllerTest {
   }
 
   @Test
-  void 受講生詳細の単一検索が実行できて対象となる受講英のリストが返ってくること() throws Exception {
+  void 受講生詳細の単一検索が実行できて対象となる受講生のリストが返ってくること() throws Exception {
     String id = "999";
     mockMvc.perform(get("/student/{id}", id))
         .andExpect(status().isOk());
@@ -55,7 +55,7 @@ class StudentControllerTest {
   }
 
   @Test
-  void 受講生詳細の登録が実行できて空で返ってくること() throws Exception {
+  void 受講生詳細の新規登録が実行できて空のリストが返ってくること() throws Exception {
     // リクエストデータは適切に構築して入力チェックの検証も兼ねている。
     // 本来であれば帰りは登録されたデータが入るが、モック化すると意味がないため、レスポンスは作らない。
     mockMvc.perform(post("/registerStudent").contentType(MediaType.APPLICATION_JSON).content(
@@ -84,7 +84,7 @@ class StudentControllerTest {
   }
 
   @Test
-  void 受講生詳細の更新が実行できて空で返ってくること() throws Exception {
+  void 受講生詳細の更新が実行できて空のリストが返ってくること() throws Exception {
     // リクエストデータは適切に構築して入力チェックの検証も兼ねている。
     mockMvc.perform(put("/updateStudent").contentType(MediaType.APPLICATION_JSON).content(
         """
