@@ -20,6 +20,14 @@ class StudentRepositoryTest {
   void 受講生の全件検索が行えること() {
     List<Student> actual = sut.search();
     assertThat(actual.size()).isEqualTo(5);
+
+    assertThat(actual.get(0).getName()).isEqualTo("YamadaTaro");
+    assertThat(actual.get(0).getKanaName()).isEqualTo("YamadaTaro");
+    assertThat(actual.get(0).getNickname()).isEqualTo("Yamachan");
+    assertThat(actual.get(0).getMailAddress()).isEqualTo("Yamachan@example.com");
+    assertThat(actual.get(0).getAddress()).isEqualTo("TokyoShibuya");
+    assertThat(actual.get(0).getAge()).isEqualTo(28);
+    assertThat(actual.get(0).getGender()).isEqualTo("Male");
   }
 
   @Test
@@ -45,6 +53,16 @@ class StudentRepositoryTest {
 
   @Test
   void 受講生の登録が行えること() {
+    Student student = createStudent();
+
+    sut.registerStudent(student);
+
+    List<Student> actual = sut.search();
+
+    assertThat(actual.size()).isEqualTo(6);
+  }
+
+  private static Student createStudent() {
     Student student = new Student();
     student.setName("江並公史");
     student.setKanaName("エナミコウジ");
@@ -55,12 +73,7 @@ class StudentRepositoryTest {
     student.setGender("男性");
     student.setRemark("");
     student.setDeleted(false);
-
-    sut.registerStudent(student);
-
-    List<Student> actual = sut.search();
-
-    assertThat(actual.size()).isEqualTo(6);
+    return student;
   }
 
   @Test
@@ -79,22 +92,12 @@ class StudentRepositoryTest {
 
   @Test
   void 受講生の更新が行えること() {
-    Student student = new Student();
-    student.setName("江並公史");
-    student.setKanaName("エナミコウジ");
-    student.setNickname("エナミ");
-    student.setMailAddress("test@example.com");
-    student.setAddress("奈良県");
-    student.setAge(36);
-    student.setGender("男性");
-    student.setRemark("");
-    student.setDeleted(false);
+    Student student = createStudent();
 
     sut.updateStudent(student);
 
-    Student updateStudent = sut.searchStudent("1");
-    assertThat(updateStudent.getName()).isEqualTo("YamadaTaro");
-    assertThat(updateStudent.getMailAddress()).isEqualTo("Yamachan@example.com");
+    Student actual = sut.searchStudent("1");
+    assertThat(actual.getName()).isEqualTo("YamadaTaro");
   }
 
   @Test
