@@ -21,13 +21,16 @@ class StudentRepositoryTest {
     List<Student> actual = sut.search();
     assertThat(actual.size()).isEqualTo(5);
 
-    assertThat(actual.get(0).getName()).isEqualTo("YamadaTaro");
-    assertThat(actual.get(0).getKanaName()).isEqualTo("YamadaTaro");
-    assertThat(actual.get(0).getNickname()).isEqualTo("Yamachan");
-    assertThat(actual.get(0).getMailAddress()).isEqualTo("Yamachan@example.com");
-    assertThat(actual.get(0).getAddress()).isEqualTo("TokyoShibuya");
-    assertThat(actual.get(0).getAge()).isEqualTo(28);
-    assertThat(actual.get(0).getGender()).isEqualTo("Male");
+      Student student = new Student();
+      student.setName("YamadaTaro");
+      student.setKanaName("YamadaTaro");
+      student.setNickname("Yamachan");
+      student.setMailAddress("Yamachan@example.com");
+      student.setAddress("TokyoShibuya");
+      student.setAge(28);
+      student.setGender("Male");
+
+      assertThat(actual.get(0)).isEqualTo(student);
   }
 
   @Test
