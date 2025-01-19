@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import raisetech.student.management.data.CourseApplication;
 import raisetech.student.management.data.Student;
 import raisetech.student.management.data.StudentCourse;
 
@@ -18,7 +19,7 @@ class StudentRepositoryTest {
 
   @Test
   void 受講生の全件検索が行えること() {
-    List<Student> actual = sut.search();
+    List<Student> actual = sut.searchStudentList();
     assertThat(actual.size()).isEqualTo(5);
 
       Student student = new Student();
@@ -55,12 +56,18 @@ class StudentRepositoryTest {
   }
 
   @Test
+  void 申し込み状況の全件検索が行えること() {
+    List<CourseApplication> actual = sut.searchCourseApplicationList();
+    assertThat(actual.size()).isEqualTo(4);
+  }
+
+  @Test
   void 受講生の登録が行えること() {
     Student student = createStudent();
 
     sut.registerStudent(student);
 
-    List<Student> actual = sut.search();
+    List<Student> actual = sut.searchStudentList();
 
     assertThat(actual.size()).isEqualTo(6);
   }
@@ -94,6 +101,20 @@ class StudentRepositoryTest {
   }
 
   @Test
+  void 申し込み状況の登録が行えること() {
+    CourseApplication courseApplication = new CourseApplication();
+    courseApplication.setCourseId("1");
+    courseApplication.setStudentId("1");
+    courseApplication.setStatus("karimoushikomi");
+
+    sut.registerCourseApplication(courseApplication);
+
+    List<CourseApplication> actual = sut.searchCourseApplicationList();
+
+    assertThat(actual.size()).isEqualTo(4);
+  }
+
+  @Test
   void 受講生の更新が行えること() {
     Student student = createStudent();
 
@@ -114,5 +135,19 @@ class StudentRepositoryTest {
 
     StudentCourse updateStudentCourse = sut.searchStudentCourseList().get(0);
     assertThat(updateStudentCourse.getCourseName()).isEqualTo("AWScourse");
+  }
+
+  @Test
+  void 申し込み状況の更新が行えること() {
+    CourseApplication courseApplication = new CourseApplication();
+    courseApplication.setId("1");
+    courseApplication.setCourseId("1");
+    courseApplication.setStudentId("1");
+    courseApplication.setStatus("jyukoutyu");
+
+    sut.updateCourseApplication(courseApplication);
+
+    List<CourseApplication> actual = sut.searchCourseApplicationList();
+    assertThat(actual.getFirst().getStatus()).isEqualTo("jyukoutyu");
   }
 }

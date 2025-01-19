@@ -19,4 +19,15 @@ CREATE TABLE IF NOT EXISTS students_courses
     course_name VARCHAR(50) NOT NULL,
     start_date TIMESTAMP,
     end_date TIMESTAMP
+    FOREIGN KEY (student_id) REFERENCES students(id)
+);
+
+CREATE TABLE IF NOT EXISTS courses_applications
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    course_id INT NOT NULL,
+    student_id INT NOT NULL,
+    status VARCHAR(100) NOT NULL,
+    FOREIGN KEY (course_id) REFERENCES students_courses(id),
+    FOREIGN KEY (student_id) REFERENCES students(id)
 );

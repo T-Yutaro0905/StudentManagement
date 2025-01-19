@@ -2,6 +2,7 @@ package raisetech.student.management.data;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import java.util.Objects;
@@ -26,7 +27,6 @@ public class Student {
   private String nickname;
 
   @NotBlank
-  @Email
   private String mailAddress;
 
   @NotBlank
@@ -34,13 +34,11 @@ public class Student {
 
   private int age;
 
-  @NotBlank
   private String gender;
 
   private String remark;
-  private boolean isDeleted;
 
-  // コンストラクタ、ゲッター、セッターなどを省略
+  private boolean isDeleted = false;
 
   @Override
   public boolean equals(Object other) {
