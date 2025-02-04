@@ -20,4 +20,13 @@ public class CourseApplication {
 
   @NotBlank(message = "申し込み状況を入力してください")
   private String status;
+
+  public CourseApplication(String id, String courseId, String studentId, String status) {
+    this.id = id;
+    this.courseId = courseId;
+    this.studentId = studentId;
+    this.status = status;
+  }
+  public  CourseApplication() {
+  }
 }

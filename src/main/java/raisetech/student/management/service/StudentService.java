@@ -20,8 +20,8 @@ import raisetech.student.management.repository.StudentRepository;
 @Service
 public class StudentService {
 
-  private  StudentRepository repository;
-  private  StudentConverter converter;
+  private StudentRepository repository;
+  private StudentConverter converter;
 
   @Autowired
   public StudentService(StudentRepository repository, StudentConverter converter) {
@@ -126,7 +126,7 @@ public class StudentService {
    * @param studentCourse 　受講生コース情報
    * @param student       　受講生
    */
-  private static void initStudentsCourse(StudentCourse studentCourse, Student student) {
+  private void initStudentsCourse(StudentCourse studentCourse, Student student) {
     LocalDateTime now = LocalDateTime.now();
 
     studentCourse.setStudentId(student.getId());
@@ -140,7 +140,7 @@ public class StudentService {
     * @param courseApplication 申し込み状況
    * @param studentCourse 受講生コース情報
    */
-  private static void initCourseApplication(CourseApplication courseApplication, StudentCourse studentCourse) {
+  private void initCourseApplication(CourseApplication courseApplication, StudentCourse studentCourse) {
     courseApplication.setCourseId(studentCourse.getId());
     courseApplication.setStudentId(studentCourse.getStudentId());
   }

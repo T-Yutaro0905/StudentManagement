@@ -1,8 +1,6 @@
 package raisetech.student.management.data;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import java.util.Objects;
@@ -57,5 +55,42 @@ public class Student {
   @Override
   public int hashCode() {
     return Objects.hash(name, kanaName, nickname, mailAddress, address, age, gender);
+  }
+
+  public Student(String id, String name, int age) {
+    this.id = id;
+    this.name = name;
+    this.age = age;
+  }
+
+  public Student() {
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setKanaName(String kanaName) {
+    this.kanaName = kanaName;
+  }
+
+  public void setNickname(String nickname) {
+    this.nickname = nickname;
+  }
+
+  public void setMailAddress(String mailAddress) {
+    this.mailAddress = mailAddress;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public void setGender(String gender) {
+    this.gender = gender;
   }
 }

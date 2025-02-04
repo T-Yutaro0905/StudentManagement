@@ -61,25 +61,39 @@ public class StudentConverter {
       StudentCourseStatus studentCourseStatus = new StudentCourseStatus();
       studentCourseStatus.setStudent(student);
 
-      List<StudentCourse> convertStudentCourseList = new ArrayList<>();
-      for (StudentCourse studentCourse : studentCourseList) {
-        if (student.getId().equals(studentCourse.getStudentId())) {
-          convertStudentCourseList.add(studentCourse);
+      List<StudentCourse> convertStudentCourseList = getStudentCourseList(student, studentCourseList);
+      List<CourseApplication> convertCourseApplicationList = getCourseApplicationList(convertStudentCourseList, courseApplicationList);
 
-          List<CourseApplication> convertCourseApplicationList = new ArrayList<>();
-          for (CourseApplication courseApplication : courseApplicationList) {
-            if (studentCourse.getStudentId().equals(courseApplication.getStudentId())) {
-              convertCourseApplicationList.add(courseApplication);
-            }
-          }
-          studentCourseStatus.setCourseApplicationList(convertCourseApplicationList);
-        }
-        studentCourseStatus.setStudentCourseList(convertStudentCourseList);
-        studentCourseStatusList.add(studentCourseStatus);
-      }
+      studentCourseStatus.setStudentCourseList(convertStudentCourseList);
+      studentCourseStatus.setCourseApplicationList(convertCourseApplicationList);
+
+      studentCourseStatusList.add(studentCourseStatus);
     }
     return studentCourseStatusList;
   }
+
+  private List<StudentCourse> getStudentCourseList(Student student, List<StudentCourse> studentCourseList) {
+    List<StudentCourse> convertStudentCourseList = new ArrayList<>();
+    for (StudentCourse studentCourse : studentCourseList) {
+      if (student.getId().equals(studentCourse.getStudentId())) {
+        convertStudentCourseList.add(studentCourse);
+      }
+    }
+    return convertStudentCourseList;
+  }
+
+  private List<CourseApplication> getCourseApplicationList(List<StudentCourse> studentCourseList, List<CourseApplication> courseApplicationList) {
+    List<CourseApplication> convertCourseApplicationList = new ArrayList<>();
+    for (StudentCourse studentCourse : studentCourseList) {
+      for (CourseApplication courseApplication : courseApplicationList) {
+        if (studentCourse.getStudentId().equals(courseApplication.getStudentId())) {
+          convertCourseApplicationList.add(courseApplication);
+        }
+      }
+    }
+    return convertCourseApplicationList;
+  }
+
 }
 
 

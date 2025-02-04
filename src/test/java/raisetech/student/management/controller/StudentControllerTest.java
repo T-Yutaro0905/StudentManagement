@@ -92,12 +92,12 @@ class StudentControllerTest {
                   "mailAddress" : "test@example.com",\s
                   "address" : "奈良",\s
                   "age" : "37",\s
-                  "gender" : "男性",\s
+                  "gender" : "男",\s
                   "remark" : ""
                },
                "studentCourseList" : [
                {
-                  "courseName" : "Javacourse"
+                  "courseName" : "Javaコース"
                }
               ]
              }
@@ -112,65 +112,66 @@ class StudentControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.post("/registerStudentCourseStatus")
             .contentType(MediaType.APPLICATION_JSON).content(
                 """
-                              {
-                              "student" : {\s
-                                    "name" : "江並公史",\s
-                                    "kanaName" : "エナミコウジ",\s
-                                    "nickname" : "コウジ",\s
-                                    "mailAddress" : "test@example.com",\s
-                                    "address" : "奈良",\s
-                                    "age" : "37",\s
-                                    "gender" : "男性",\s
-                                    "remark" : ""
+                {
+                    "student": {
+                        "name": "江並公史",
+                        "kanaName": "エナミコウジ",
+                        "nickname": "コウジ",
+                        "mailAddress": "test@example.com",
+                        "address": "奈良",
+                        "age": "37",
+                        "gender": "男",
+                        "remark": ""
                     },
-                    "studentCourseList" : [
-                    {
-                    "courseName" : "Javacourse"
-                    }
+                    "studentCourseList": [
+                        {
+                            "courseName": "Javaコース"
+                        }
                     ],
-                    "courseApplicationList" : [
-                    {
-                    "status" : "karimoushikomi"
-                    }
+                    "courseApplicationList": [
+                        {
+                            "status": "仮申込"
+                        }
                     ]
-                    }
-                    """
+                }
+                """
             ))
         .andExpect(status().isOk());
 
     verify(service, times(1)).registerStudentCourseStatus(any());
   }
 
+
   @Test
   void 受講生詳細の更新が実行できて空のリストが返ってくること() throws Exception {
     // リクエストデータは適切に構築して入力チェックの検証も兼ねている。
     mockMvc.perform(MockMvcRequestBuilders.put("/updateStudent")
         .contentType(MediaType.APPLICATION_JSON).content(
-        """
-            {
-               "student" : {
-                  "id" : "12",
-                  "name" : "江並公史",
-                  "kanaName" : "エナミコウジ",
-                  "nickname" : "コウジ",
-                  "mailAddress" : "test@example.com",
-                  "address" : "奈良",
-                  "age" : "37",
-                  "gender" : "男性",
-                  "remark" : ""
-               },
-               "studentCourseList" : [
-               {
-                  "id" : "15",
-                  "studentId" : "12",
-                  "courseName" : "JavaCourse",
-                  "startDate" : "2024-04-27T10:50:39.833614",
-                  "endDate" : "2024-04-27T10:50:39.833614"
-               }
-              ]
-             }
             """
-    )).andExpect(status().isOk());
+                {
+                   "student": {
+                      "id": "12",
+                      "name": "江並公史",
+                      "kanaName": "エナミコウジ",
+                      "nickname": "コウジ",
+                      "mailAddress": "test@example.com",
+                      "address": "奈良",
+                      "age": "37",
+                      "gender": "男",
+                      "remark": ""
+                   },
+                   "studentCourseList": [
+                      {
+                         "id": "15",
+                         "studentId": "12",
+                         "courseName": "Javaコース",
+                         "startDate": "2024-04-27T10:50:39.833614",
+                         "endDate": "2024-04-27T10:50:39.833614"
+                      }
+                   ]
+                }
+            """
+        )).andExpect(status().isOk());
 
     verify(service, times(1)).updateStudent(any());
   }
@@ -179,42 +180,43 @@ class StudentControllerTest {
   void 申し込み状況の更新が実行できて空で返ってくること() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.put("/updateStudentCourseStatus")
         .contentType(MediaType.APPLICATION_JSON).content(
-        """
-            {
-               "student" : {
-                  "id" : "1",
-                  "name" : "YamadaTaro",
-                  "kanaName" : "YamadaTaro",
-                  "nickname" : "Yamachan",
-                  "mailAddress" : "Yamachan@example.com",
-                  "address" : "TokyoShibuya",
-                  "age" : "28",
-                  "gender" : "Male",
-                  "remark" : ""
-               },
-               "studentCourseList" : [
-               {
-                  "id" : "1",
-                  "studentId" : "1",
-                  "courseName" : "JavaCourse",
-                  "startDate" : "2024-01-10T10:50:39.833614",
-                  "endDate" : "2024-05-10T10:50:39.833614"
-               }
-              ],
-              "courseApplicationList" : [
-              {
-              "id" : "1",
-              "courseId" : "1",
-              "statusId" : "1",
-              "status" : "karimousikomi"
-             }
-             ]
-             }
             """
-    )).andExpect(status().isOk());
+                {
+                   "student": {
+                      "id": "1",
+                      "name": "山田太郎",
+                      "kanaName": "ヤマダタロウ",
+                      "nickname": "やまちゃん",
+                      "mailAddress": "Yamachan@example.com",
+                      "address": "東京",
+                      "age": "28",
+                      "gender": "男",
+                      "remark": ""
+                   },
+                   "studentCourseList": [
+                      {
+                         "id": "1",
+                         "studentId": "1",
+                         "courseName": "Javaコース",
+                         "startDate": "2024-01-10T10:50:39.833614",
+                         "endDate": "2024-05-10T10:50:39.833614"
+                      }
+                   ],
+                   "courseApplicationList": [
+                      {
+                         "id": "1",
+                         "courseId": "1",
+                         "statusId": "1",
+                         "status": "仮申込"
+                      }
+                   ]
+                }
+            """
+        )).andExpect(status().isOk());
 
     verify(service, times(1)).updateStudentCourseStatus(any());
   }
+
 
   @Test
   void 受講生詳細の例外APIが実行できてステータスが400で返ってくること() throws Exception {
@@ -231,8 +233,8 @@ class StudentControllerTest {
     student.setKanaName("エナミコウジ");
     student.setNickname("エナミ");
     student.setMailAddress("test@example.com");
-    student.setAddress("奈良県");
-    student.setGender("男性");
+    student.setAddress("奈良");
+    student.setGender("男");
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
 
@@ -247,8 +249,8 @@ class StudentControllerTest {
     student.setKanaName("エナミコウジ");
     student.setNickname("エナミ");
     student.setMailAddress("test@example.com");
-    student.setAddress("奈良県");
-    student.setGender("男性");
+    student.setAddress("奈良");
+    student.setGender("男");
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
 
@@ -276,7 +278,7 @@ class StudentControllerTest {
     StudentCourse studentCourse = new StudentCourse();
     studentCourse.setId("テストです。");
     studentCourse.setStudentId("1");
-    studentCourse.setCourseName("Java");
+    studentCourse.setCourseName("Javaコース");
     studentCourse.setStartDate(LocalDateTime.now());
     studentCourse.setEndDate(LocalDateTime.now().plusYears(1));
 
