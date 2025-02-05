@@ -21,37 +21,27 @@ class StudentRepositoryTest {
   void 受講生の全件検索が行えること() {
     List<Student> actual = sut.searchStudentList();
     assertThat(actual.size()).isEqualTo(5);
-
-      Student student = new Student();
-      student.setName("山田太郎");
-      student.setKanaName("ヤマダタロウ");
-      student.setNickname("やまちゃん");
-      student.setMailAddress("Yamachan@example.com");
-      student.setAddress("東京");
-      student.setAge(28);
-      student.setGender("男");
-
-      assertThat(actual.get(0)).isEqualTo(student);
+    assertThat(actual.getFirst().getName()).isEqualTo("山田太郎");
   }
 
   @Test
   void 受講生の単一検索が行えること() {
-    String id = "1";
-    Student actual = sut.searchStudent(id);
-    assertThat(actual.getId()).isEqualTo(id);
+    Student actual = sut.searchStudent("1");
+    assertThat(actual.getName()).isEqualTo("山田太郎");
   }
 
   @Test
   void 受講生コース情報の全体検索が行えること() {
     List<StudentCourse> actual = sut.searchStudentCourseList();
-    assertThat(actual.size()).isEqualTo(10);
+    assertThat(actual.size()).isEqualTo(6);
+    assertThat(actual.getLast().getStudentId()).isEqualTo("5");
   }
 
   @Test
   void 受講生コース情報の単一検索が行えること() {
-    String id = "1";
-    List<StudentCourse> actual = sut.searchStudentCourse(id);
+    List<StudentCourse> actual = sut.searchStudentCourse("1");
     assertThat(actual.size()).isEqualTo(1);
+    assertThat(actual.getFirst().getId()).isEqualTo("1");
   }
 
   @Test

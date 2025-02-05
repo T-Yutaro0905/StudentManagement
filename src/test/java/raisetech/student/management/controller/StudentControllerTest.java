@@ -141,7 +141,6 @@ class StudentControllerTest {
     verify(service, times(1)).registerStudentCourseStatus(any());
   }
 
-
   @Test
   void 受講生詳細の更新が実行できて空のリストが返ってくること() throws Exception {
     // リクエストデータは適切に構築して入力チェックの検証も兼ねている。
@@ -264,7 +263,7 @@ class StudentControllerTest {
     StudentCourse studentCourse = new StudentCourse();
     studentCourse.setId("1");
     studentCourse.setStudentId("1");
-    studentCourse.setCourseName("Java");
+    studentCourse.setCourseName("Javaコース");
     studentCourse.setStartDate(LocalDateTime.now());
     studentCourse.setEndDate(LocalDateTime.now().plusYears(1));
 

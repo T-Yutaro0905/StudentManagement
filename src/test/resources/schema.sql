@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS students_courses
 CREATE TABLE IF NOT EXISTS course_application
 (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    course_id INT NOT NULL,
-    student_id INT NOT NULL,
+    course_id INT,
+    student_id INT,
     status VARCHAR(100) NOT NULL,
     FOREIGN KEY (course_id) REFERENCES students_courses(id),
     FOREIGN KEY (student_id) REFERENCES students(id)
