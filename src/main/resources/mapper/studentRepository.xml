@@ -3,7 +3,7 @@
 <mapper namespace="raisetech.student.management.repository.StudentRepository">
 
   <!-- 受講生の全件検索 -->
-  <select id="search" resultType="raisetech.student.management.data.Student">
+  <select id="searchStudentList" resultType="raisetech.student.management.data.Student">
     SELECT *
     FROM students
   </select>
@@ -28,6 +28,12 @@
     WHERE student_id = #{studentId}
   </select>
 
+  <!-- 申し込み状況の全件検索 -->
+  <select id="searchCourseApplicationList" resultType="raisetech.student.management.data.CourseApplication">
+    SELECT *
+    FROM course_application
+  </select>
+
   <!-- 受講生の登録 -->
   <insert id="registerStudent" parameterType="raisetech.student.management.data.Student" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO students (name, kanaName, nickname, mail_address, address, age, gender, remark, is_deleted)
@@ -38,6 +44,12 @@
   <insert id="registerStudentCourse" parameterType="raisetech.student.management.data.StudentCourse" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO students_courses (student_id, course_name, start_date, end_date)
     VALUES (#{studentId}, #{courseName}, #{startDate}, #{endDate})
+  </insert>
+
+  <!-- コース申請情報の新規登録 -->
+  <insert id="registerCourseApplication" parameterType="raisetech.student.management.data.CourseApplication" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO course_application (course_id, student_id, status)
+    VALUES (#{courseId}, #{studentId}, #{status})
   </insert>
 
   <!-- 受講生の更新 -->
@@ -61,5 +73,15 @@
     SET course_name = #{courseName}
     WHERE id = #{id}
   </update>
+
+  <!-- 申し込み状況のステータスを更新 -->
+  <update id="updateCourseApplication" parameterType="raisetech.student.management.data.StudentCourse">
+    UPDATE course_application SET status = #{status} WHERE id = #{id}
+  </update>
+
+  <select id="searchStudentCourseTest" resultType="raisetech.student.management.data.StudentCourse">
+    SELECT *
+    FROM students_courses WHERE id = #{id}
+  </select>
 
 </mapper>
