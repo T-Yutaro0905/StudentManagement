@@ -23,23 +23,29 @@ public class StudentConverterTest {
 
   @Test
   void 受講生のリストと受講生コース情報のリストを渡して受講生詳細のリストが作成できること() {
-    List<Student> studentList = List.of();
-    List<StudentCourse> studentCourseList = List.of();
+    Student student = createStudent();
+    StudentCourse studentCourse = createStudentCourse("1");
+
+    List<Student> studentList = List.of(student);
+    List<StudentCourse> studentCourseList = List.of(studentCourse);
 
     List<StudentDetail> actual = sut.convertStudentDetails(studentList, studentCourseList);
 
-    assertThat(actual.get(0).getStudent()).isEqualTo(studentList);
+    assertThat(actual.get(0).getStudent()).isEqualTo(student);
     assertThat(actual.get(0).getStudentCourseList()).isEqualTo(studentCourseList);
   }
 
   @Test
   void 受講生のリストと受講生コース情報のリストを渡したときに紐づかない受講生コース情報は情報は除外されること() {
-    List<Student> studentList = List.of();
-    List<StudentCourse> studentCourseList = List.of();
+    Student student = createStudent();
+    StudentCourse studentCourse = createStudentCourse("3");
+
+    List<Student> studentList = List.of(student);
+    List<StudentCourse> studentCourseList = List.of(studentCourse);
 
     List<StudentDetail> actual = sut.convertStudentDetails(studentList, studentCourseList);
 
-    assertThat(actual.get(0).getStudent()).isEqualTo(studentList);
+    assertThat(actual.get(0).getStudent()).isEqualTo(student);
   }
 
   @Test
