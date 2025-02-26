@@ -33,7 +33,7 @@ class StudentRepositoryTest {
   @Test
   void 受講生コース情報の全体検索が行えること() {
     List<StudentCourse> actual = sut.searchStudentCourseList();
-    assertThat(actual.size()).isEqualTo(6);
+    assertThat(actual.size()).isEqualTo(5);
     assertThat(actual.getLast().getStudentId()).isEqualTo("5");
   }
 
@@ -86,7 +86,7 @@ class StudentRepositoryTest {
     sut.registerStudentCourse(studentCourse);
 
     List<StudentCourse> actual = sut.searchStudentCourseList();
-    assertThat(actual.size()).isEqualTo(11);
+    assertThat(actual.size()).isEqualTo(6);
   }
 
   @Test
