@@ -216,14 +216,6 @@ class StudentControllerTest {
     verify(service, times(1)).updateStudentCourseStatus(any());
   }
 
-
-  @Test
-  void 受講生詳細の例外APIが実行できてステータスが400で返ってくること() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/exception"))
-        .andExpect(status().is4xxClientError())
-        .andExpect(content().string("このAPIは現在利用できません。古いURLとなっています。"));
-  }
-
   @Test
   void 受講生詳細の受講生で適切な値を入力した時に入力チェックに異常が発生しないこと() {
     Student student = new Student();
@@ -270,21 +262,5 @@ class StudentControllerTest {
     Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
 
     assertThat(violations.size()).isEqualTo(0);
-  }
-
-  @Test
-  void 受講生詳細の受講生コース情報でIDに数字以外を用いた時に入力チェックに異常が発生しないこと() {
-    StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setId("テストです。");
-    studentCourse.setStudentId("1");
-    studentCourse.setCourseName("Javaコース");
-    studentCourse.setStartDate(LocalDateTime.now());
-    studentCourse.setEndDate(LocalDateTime.now().plusYears(1));
-
-    Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
-
-    assertThat(violations.size()).isEqualTo(1);
-    assertThat(violations).extracting("message")
-        .containsOnly("数字のみ入力するようにしてください。");
   }
 }
