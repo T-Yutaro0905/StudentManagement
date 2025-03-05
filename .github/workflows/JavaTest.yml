@@ -71,12 +71,12 @@ jobs:
             SuccessExitStatus = 143
             
             [Install]
-            WantedBy = multi-user.target
+            wantedBy = multi-user.target
             EOL
             fi
             
             sudo systemctl daemon-reload
-              if sudo systemctl status StudentManagement 2>&1 | grep "Active: active (running" ; then
+            if sudo systemctl status StudentManagement 2>&1 | grep "Active: active (running" ; then
               sudo systemctl restart StudentManagement
             else
               sudo systemctl start StudentManagement
